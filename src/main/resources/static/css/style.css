@@ -8,5 +8,9 @@ header {height:100px;}
 .contents {min-height:500px;}
 #signUpDiv {height:500px;}  
 .sign-up-box {width:500px;}
+
+#signInForm {width:300px;}
+#signInDiv {height:500px;}
+
 footer {height:100px;}
 #footerBox {height:100px;}
