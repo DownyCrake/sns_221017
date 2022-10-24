@@ -12,5 +12,22 @@ header {height:100px;}
 #signInForm {width:300px;}
 #signInDiv {height:500px;}
 
+#timelineDiv {width:600px; margin:auto;}
+
+#postInputForm {width:600px; border:1px solid #C0C0C0;}
+#postInputArea {min-height:100px; border:none;}
+
+#postViewandComment {border:1px solid #C0C0C0;}
+#postImgDiv {min-height:400px; }
+
+#commentList { min-height:50px;}
+
+#inputComment {border:none;}
+#inputCommentBtn {border:none;}
+
 footer {height:100px;}
 #footerBox {height:100px;}
+
+
+
+.more-btn {background-color:transparent; border:none;}
