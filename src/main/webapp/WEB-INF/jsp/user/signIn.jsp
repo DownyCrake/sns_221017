@@ -45,7 +45,7 @@ $(document).ready(function(){
 		
 		$.post(url, params).done(function(data){
 			if (data.code == 100){
-				location.href="/user/sign_in_view"
+				location.href="/timeline/timeline_view"
 			}else {
 				alert(data.errorMessage);
 			}

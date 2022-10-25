@@ -1,4 +1,4 @@
-package com.sns.post;
+package com.sns.timeline;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("/timeline")
 @Controller
-public class PostController {
+public class TimelineController {
 
 	@RequestMapping("/timeline_view")
 	public String timelineView(Model model) {

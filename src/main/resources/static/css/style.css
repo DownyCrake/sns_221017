@@ -14,8 +14,8 @@ header {height:100px;}
 
 #timelineDiv {width:600px; margin:auto;}
 
-#postInputForm {width:600px; border:1px solid #C0C0C0;}
-#post {min-height:100px; border:none;}
+#postInputDiv {width:600px; border:1px solid #C0C0C0;}
+#content {min-height:100px; border:none;}
 
 #postViewAndComment {border:1px solid #C0C0C0;}
 #postImgDiv {min-height:400px; }

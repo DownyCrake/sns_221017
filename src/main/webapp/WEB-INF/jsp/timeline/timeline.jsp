@@ -7,13 +7,24 @@
 	
 	<div class="d-flex justify-content-center">
 
-		<form id="postInputForm">
-			<textarea class="w-100" id="post" name="post" placeholder="내용을 입력해주세요"></textarea>
+		<div id="postInputDiv">
+			<textarea class="w-100" id="content" name="content" placeholder="내용을 입력해주세요"></textarea>
 			<div class="d-flex justify-content-between">
-				<button type="button" name="postImageBtn" class="btn">이미지 업로드</button>				
-				<input type="button" id="postBtn" class="btn btn-info text-white" value="게시">
+				
+				<div class="d-flex">
+					<input type="file" id="file" class="d-none" accept="/gjf, .jpg, .png, .jpeg" >
+					
+					<a href="#" id="fileUpLoadBtn">
+					<img width="35" src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-512.png" >
+					</a>
+					
+					<%-- 업로드된 임시 파일 이름 저장 --%>
+					<div id="fileName" class="ml-2"></div>
+				</div>
+				
+				<input type="button" id="postCreateBtn" class="btn btn-info text-white" value="게시">
 			</div>		
-		</form>
+		</div>
 	</div>
 		
 		<div id="postViewAndComment" class="mt-5">
@@ -52,3 +63,82 @@
 	
 	</div>
 </div>
+
+
+<script>
+$(document).ready(function(){
+	// 파일 업로드 이미지 (a)를 클릭 => 파일 선택창이 떠야함
+	$('#fileUpLoadBtn').on('click', function(e){
+		e.preventDefault();   // a태그의 기본 동작 멈춤 (화면이 위로 올라가는것 방지)
+		$('#file').click(); //inputfile을 클릭한 것과 같은 효과				
+	});//파일 업로드 버튼 클릭
+	
+	//사용자가 파일 업로드 했을때
+	$('#file').on('change', function(e) {
+		//alert("체인지");
+		
+		let fileName = e.target.files[0].name;
+		
+		let ext = fileName.split('.').pop().toLowerCase();
+		
+		//확장자 유효성 확인
+		if (fileName.split('.').length < 2 || 
+				(ext != 'gif'
+					&& ext != 'png'
+						&& ext != 'jpeg'
+							&& ext != 'jpg')  ) {
+			alert("이미지 파일만 업로드 할 수 있습니다.");
+			$(this).val('');
+			$('#fileName').text('');
+			return;
+		}
+		//상자에 업로드된 이름 노출
+		$('#fileName').text(fileName);
+		
+	});// 파일 업로드
+	
+	$('#postCreateBtn').on('click', function() {
+		
+		let content = $('#content').val().trim();
+		if (content =='') {
+			alert("글 내용을 입력하세요");
+			return;
+		}
+		if ( $('#file')[0].files[0] == null  ){
+			alert("그림을 선택해주세요");
+			return;
+		}
+			
+		let formData = new FormData();
+		formData.append('content', content);
+		formData.append('file', $('#file')[0].files[0]);
+		
+		$.ajax({
+			type:"post"
+			, url:"/post/create"
+			, data: formData
+			, enctype:"multipart/form-data"  // 파일 업로드를 위한 필수 설정
+			, processData:false  // 파일 업로드를 위한 필수 설정
+			, contentType:false  // 파일 업로드를 위한 필수 설정			
+				
+			, success:function(data){
+				if (data.code == 100) {
+					alert("글이 저장되었습니다");
+					location.href = "/timeline/timeline_view";
+				} else {
+					alert(data.errorMessage);	
+					location.href = "/user/sign_in_view";
+				}
+			}
+			, error:function(e){
+				alert("저장에 실패했습니다");
+			}
+			
+		});//ajax
+		
+	});// 게시 클릭
+	
+});//ready
+
+
+</script>
