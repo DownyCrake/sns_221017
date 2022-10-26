@@ -27,24 +27,29 @@
 		</div>
 	</div>
 		
+		<c:forEach items="${postList }" var="post" varStatus="postListStatus">
+		
 		<div id="postViewAndComment" class="mt-5">
 			<div class="d-flex justify-content-between p-2">
-				<div class="font-weight-bold">${userName}</div>
+				<div class="font-weight-bold">글쓴이</div>
 				<button type="button" class="hidden-btn"> 
 					<img src="/static/img/more-icon.png" height="20px" alt="게시글 삭제">
 				</button>
 			</div>
 			<div id="postImgDiv" class="bg-dark">
-				
+				<img src="${post.imagePath}" width="600px" alt="게시한 이미지" > 
 			</div>
 			<div class="p-2">
 				<button type="button" class="hidden-btn">
 					<img src="/static/img/heart-icon1.png" height="18px" alt="좋아요">					
 				</button>
+				<button type="button" class="hidden-btn">
+					<img src="/static/img/heart-icon2.png" height="18px" alt="좋아요">					
+				</button>
 				좋아요
 			</div>
 			<div id="postDiv" class="mt-3 mb-3">
-				ㅇㅇㅇ
+				<b>글쓴이</b>  ${post.content}
 			</div>
 			<div class="p-2">
 				<b>댓글</b>
@@ -53,13 +58,13 @@
 			<div id="commentList">
 				
 			</div>
-			<hr class="m-0">
-			<div class="d-flex height-40px" >
-				<input type="text" class="w-100" id="comment" name="" placeholder="댓글달기">
-				<button type="button" class="" id="inputCommentBtn">게시</button>	
+			<div class="d-flex height-40px border-top" >
+				<input type="text" class="w-100" id="comment" placeholder="댓글달기">
+				<button type="button" class="comment-btn" id="inputCommentBtn" data-post-id="${post.id}">게시</button>	
 			</div>
 		</div>
-	
+		
+		</c:forEach>
 	
 	</div>
 </div>
@@ -125,7 +130,10 @@ $(document).ready(function(){
 				if (data.code == 100) {
 					alert("글이 저장되었습니다");
 					location.href = "/timeline/timeline_view";
-				} else {
+				} else if (data.code ==300) {
+					alert(data.errorMessage);	
+					location.href = "/timeline/timeline_view";
+				}else {
 					alert(data.errorMessage);	
 					location.href = "/user/sign_in_view";
 				}
@@ -135,8 +143,39 @@ $(document).ready(function(){
 			}
 			
 		});//ajax
+	});// 글쓰기 게시 클릭
+	
+	//댓글 게시버튼 클릭
+	$('.comment-btn').on('click', function() {
+		// alert("댓글");
+		let postId = $(this).data('post-id');
+		// alert(postId);
+		//지금 클릭된 게시버튼의 형제인 input 태그를 가져온다 (siblings)
+		let comment = $(this).siblings('input').val().trim();
+		//alert(postId + comment);
 		
-	});// 게시 클릭
+		$.ajax({
+			type:"post"
+			, url:"/comment/create"
+			, data: {"postId":postId, "comment":comment}
+
+			,success:function(data){
+				if (data.code == 100){
+					alert("댓글이 저장되었습니다");
+				} else if (data.code == 300) {
+					alert(data.errorMessage);
+				} else {
+					alert(data.errorMessage);
+				}
+			}
+			
+			, error:function(e){
+				alert("저장에 실패했습니다");
+			}
+			
+		});//ajax
+	}); //댓글 게시 클릭
+	
 	
 });//ready
 
