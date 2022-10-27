@@ -13,4 +13,36 @@
 		`postId` = #{postId}
 </select>
 
+<select id="existLikeByUserIdAndPostId" parameterType="map" resultType="boolean">
+	SELECT
+		COUNT(*)
+	FROM
+		`like`
+	WHERE
+		`postId` = #{postId} AND `userId` = #{userId}
+</select>
+
+<insert id="insertLikeByUserIdAndPostId" parameterType="map">
+	INSERT INTO `like`
+	( 
+		`userId`
+		, `postId`
+		, `createdAt`
+	)
+	VALUES
+	(
+		#{userId}
+		, #{postId}
+		, NOW()	
+	)
+</insert>
+
+<delete id="deleteLikeByUserIdAndPostId" parameterType="map">
+	DELETE
+	FROM 
+		`like`
+	WHERE 
+		`postId` = #{postId} AND `userId` = #{userId}
+</delete>
+
 </mapper>

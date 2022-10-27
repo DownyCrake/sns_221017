@@ -28,8 +28,8 @@ public class TimelineController {
 		
 		//List<Post> postList = postBO.getPostList();
 		//model.addAttribute("postList", postList);
-		
-		List<CardView> cardViewList = timelineBO.generateCardList();
+		Integer userId =(Integer)session.getAttribute("userId");
+		List<CardView> cardViewList = timelineBO.generateCardList(userId);
 		model.addAttribute("cardViewList", cardViewList);
 		
 		

@@ -2,30 +2,41 @@ package com.sns.timeline;
 
 import java.util.List;
 
-import com.sns.comment.model.Comment;
-import com.sns.like.model.Like;
+import com.sns.comment.model.CommentView;
 import com.sns.post.model.Post;
+import com.sns.user.model.User;
 
 public class CardView {
 	// 글1개 
 	private Post post;
 
 	// 댓글N개
-	private List<Comment> commentList;
+	private List<CommentView> commentViewList;
 
-	// 좋아요
+	// 유저정보
+	private User user;
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	// 좋아요 개수
 	private int likeCount;
 	
 	//로그인된 사람이 좋아요를 눌렀는지
-	private boolean isLike;
+	private boolean filledLike;  // 눌렀으면 true  아니면 false
 
-	
-	public boolean isLike() {
-		return isLike;
+
+	public boolean isFilledLike() {
+		return filledLike;
 	}
 
-	public void setLike(boolean isLike) {
-		this.isLike = isLike;
+	public void setFilledLike(boolean filledLike) {
+		this.filledLike = filledLike;
 	}
 
 	public int getLikeCount() {
@@ -44,13 +55,17 @@ public class CardView {
 		this.post = post;
 	}
 
-	public List<Comment> getCommentList() {
-		return commentList;
+	public List<CommentView> getCommentViewList() {
+		return commentViewList;
 	}
 
-	public void setCommentList(List<Comment> commentList) {
-		this.commentList = commentList;
+	public void setCommentViewList(List<CommentView> commentViewList) {
+		this.commentViewList = commentViewList;
 	}
+
+
+
+
 
 
 	

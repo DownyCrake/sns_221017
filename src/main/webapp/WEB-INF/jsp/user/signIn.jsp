@@ -27,7 +27,7 @@
 $(document).ready(function(){
 	
 	$("#signInForm").on('submit', function(e) {
-		e.preventDefault;
+		e.preventDefault();
 		
 		let loginId = $('input[name=loginId]').val().trim();
 		let password = $('input[name=password]').val().trim();

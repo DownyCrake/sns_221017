@@ -8,8 +8,15 @@ public interface LikeDAO {
 
 	public int selectLikeCountByPostId(int postId);
 	
-	
 	public int insertLikeByUserIdAndPostId(
+			@Param("userId") int userId
+			, @Param("postId") int postId);
+
+	public int deleteLikeByUserIdAndPostId(
+			@Param("userId") int userId
+			, @Param("postId") int postId);
+	
+	public boolean existLikeByUserIdAndPostId(
 			@Param("userId") int userId
 			, @Param("postId") int postId);
 }
