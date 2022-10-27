@@ -27,7 +27,7 @@
 		</div>
 	</div>
 		
-		<c:forEach items="${postList }" var="post" varStatus="postListStatus">
+		<c:forEach items="${cardViewList}" var="cardView" varStatus="postListStatus">
 		
 		<div id="postViewAndComment" class="mt-5">
 			<div class="d-flex justify-content-between p-2">
@@ -37,7 +37,7 @@
 				</button>
 			</div>
 			<div id="postImgDiv" class="bg-dark">
-				<img src="${post.imagePath}" width="600px" alt="게시한 이미지" > 
+				<img src="${cardView.post.imagePath}" width="600px" alt="게시한 이미지" > 
 			</div>
 			<div class="p-2">
 				<button type="button" class="hidden-btn">
@@ -46,21 +46,25 @@
 				<button type="button" class="hidden-btn">
 					<img src="/static/img/heart-icon2.png" height="18px" alt="좋아요">					
 				</button>
-				좋아요
+				좋아요 ${cardView.likeCount}
 			</div>
 			<div id="postDiv" class="mt-3 mb-3">
-				<b>글쓴이</b>  ${post.content}
+				<b>글쓴이</b>  ${cardView.post.content}
 			</div>
 			<div class="p-2">
 				<b>댓글</b>
 			</div>
-			<hr class="m-0">
-			<div id="commentList">
+			<div id="commentList" class="border-top">
+				<c:forEach items="${cardView.commentList}" var="commentList">
+					<div class="m-2">
+						: ${commentList.content}
+					</div>
 				
+				</c:forEach>
 			</div>
 			<div class="d-flex height-40px border-top" >
 				<input type="text" class="w-100" id="comment" placeholder="댓글달기">
-				<button type="button" class="comment-btn" id="inputCommentBtn" data-post-id="${post.id}">게시</button>	
+				<button type="button" class="comment-btn" id="inputCommentBtn" data-post-id="${cardView.post.id}">게시</button>	
 			</div>
 		</div>
 		
@@ -162,6 +166,7 @@ $(document).ready(function(){
 			,success:function(data){
 				if (data.code == 100){
 					alert("댓글이 저장되었습니다");
+					document.location.reload(true);
 				} else if (data.code == 300) {
 					alert(data.errorMessage);
 				} else {

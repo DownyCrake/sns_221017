@@ -44,12 +44,12 @@ $(document).ready(function(){
 		let params = $(this).serialize();
 		
 		$.post(url, params).done(function(data){
-			if (data.code == 100){
-				location.href="/timeline/timeline_view"
+			if (data.result == "success"){
+				alert("로그인");
+				location.href="/timeline/timeline_view"; 
 			}else {
 				alert(data.errorMessage);
 			}
-			
 		});//done
 		
 	});//submit click

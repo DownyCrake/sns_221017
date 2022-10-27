@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.sns.common.FileManagerService;
 import com.sns.post.bo.PostBO;
 
 @RequestMapping("/post")
@@ -20,6 +21,10 @@ public class PostRestController {
 	
 	@Autowired
 	private PostBO postBO;
+	
+	@Autowired
+	private FileManagerService fileManageService;
+	
 	
 	@PostMapping("/create")
 	public Map<String, Object> create(
@@ -30,6 +35,9 @@ public class PostRestController {
 		String userLoginId = (String)session.getAttribute("userLoginId");
 		Integer userId = (Integer)session.getAttribute("userId");
 		Map<String, Object> result = new HashMap<>();
+		
+		String imagePath = fileManageService.saveFile(userLoginId, file);
+
 		
 		if (userId == null) {
 			result.put("code", 300);

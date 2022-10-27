@@ -34,7 +34,7 @@ public class CommentRestController {
 			return result;
 		}
 		
-		int row = commentBO.addComment(postId, postId, comment);
+		int row = commentBO.addComment(postId, userId, comment);
 		if (row > 0) {
 			result.put("code", 100);
 			result.put("result","success");

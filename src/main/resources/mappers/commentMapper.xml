@@ -24,5 +24,19 @@
  	)
  </insert>
  
+ <select id="selectCommentList" resultType="com.sns.comment.model.Comment">
+ 	SELECT
+		`id`
+		, `postId`
+		, `userId`
+		, `content`
+		, `createdAt`
+		, `updatedAt`
+	FROM
+		`comment`
+	WHERE
+		`postId` = #{postId}
+ 	
+ </select>
  
  </mapper>
