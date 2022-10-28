@@ -7,6 +7,7 @@
 	
 	<div class="d-flex justify-content-center">
 
+		<c:if test="${not empty userId}">
 		<div id="postInputDiv">
 			<textarea class="w-100" id="content" name="content" placeholder="내용을 입력해주세요"></textarea>
 			<div class="d-flex justify-content-between">
@@ -25,6 +26,8 @@
 				<input type="button" id="postCreateBtn" class="btn btn-info text-white" value="게시">
 			</div>		
 		</div>
+		</c:if>
+		
 	</div>
 		
 		<c:forEach items="${cardViewList}" var="cardView" varStatus="postListStatus">
@@ -40,23 +43,23 @@
 				<img src="${cardView.post.imagePath}" width="600px" alt="게시한 이미지" > 
 			</div>
 			<div class="p-2">
-			
-			
-			<c:choose>
-				<c:when test="${cardView.filledLike eq true }">
-					<button type="button" class="hidden-btn like-btn" data-post-id="${cardView.post.id}">
-						<img src="/static/img/heart-icon2.png" height="18px" alt="좋아요 삭제">					
-					</button>
-				</c:when>
+		
+			<!-- 좋아요 버튼 표시 -->
 				
-				<c:otherwise>
-				<button type="button" class="hidden-btn like-btn" data-post-id="${cardView.post.id}">
-					<img src="/static/img/heart-icon1.png" height="18px" alt="좋아요 추가">					
-				</button>
-				</c:otherwise>
-
-			</c:choose>
-			
+				<c:choose>
+					<c:when test="${cardView.filledLike eq true }">
+						<button type="button" class="hidden-btn like-btn" data-post-id="${cardView.post.id}" data-user-id="${userId}">
+							<img src="/static/img/heart-icon2.png" height="18px" alt="좋아요 삭제">					
+						</button>
+					</c:when>
+					
+					<c:otherwise>
+					<button type="button" class="hidden-btn like-btn" data-post-id="${cardView.post.id}" data-user-id="${userId}">
+						<img src="/static/img/heart-icon1.png" height="18px" alt="좋아요 추가">					
+					</button>
+					</c:otherwise>
+				</c:choose>
+				
 			
 				좋아요 ${cardView.likeCount}
 			</div>
@@ -68,15 +71,24 @@
 			</div>
 			<div id="commentList" class="border-top">
 				<c:forEach items="${cardView.commentViewList}" var="commentView">
-					<div class="m-2">
-						<span class="font-weight-bold">${commentView.user.name}</span> : ${commentView.comment.content}
-					</div>
+					<div class="d-flex justify-content-between">
+						<div class="m-2">
+							<span class="font-weight-bold">${commentView.user.name}</span> : ${commentView.comment.content}
+						</div>
+						<div>
+							<c:if test="${userId eq commentView.user.id }">
+							<button type="button" class="delteCommentBtn" data-comment-id="${commentView.comment.id}"></button>
+							</c:if>
+						</div>
+					</div>	
 				</c:forEach>
 			</div>
+			<c:if test="${not empty userId}">
 			<div class="d-flex height-40px border-top" >
 				<input type="text" class="w-100" id="comment" placeholder="댓글달기">
 				<button type="button" class="comment-btn" id="inputCommentBtn" data-post-id="${cardView.post.id}">게시</button>	
 			</div>
+			</c:if>
 		</div>
 		
 		</c:forEach>
@@ -193,6 +205,12 @@ $(document).ready(function(){
 	}); //댓글 게시 클릭
 	
 	$('.like-btn').on('click', function() {
+		let userId = $(this).data('user-id');
+		if (userId =='') {
+			alert("로그인해주세요");
+			return;
+		}
+		
 		let postId = $(this).data('post-id');
 		$.ajax({
 			type:"get"
@@ -200,10 +218,6 @@ $(document).ready(function(){
 			
 			,success:function(data){
 				if (data.code == 100){
-					alert("좋아요 추가");
-					document.location.reload(true);
-				} else if (data.code == 300) {
-					alert("좋아요 삭제");
 					document.location.reload(true);
 				} else {
 					alert("유저정보 없음");

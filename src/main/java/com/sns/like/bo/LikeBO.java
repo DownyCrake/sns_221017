@@ -14,12 +14,12 @@ public class LikeBO {
 	private LikeDAO likeDAO;
 	
 	// 좋아요 추가
-	public int addLikeByUserIdAndPostId(Integer userId, int postId) {
+	public int addLikeByUserIdAndPostId(int userId, int postId) {
 		return likeDAO.insertLikeByUserIdAndPostId(userId, postId);
 	}
 	
 	//좋아요 삭제
-	public int deleteLikeByUserIdAndPostId(Integer userId, int postId) {
+	public int deleteLikeByUserIdAndPostId(int userId, int postId) {
 		return likeDAO.deleteLikeByUserIdAndPostId(userId, postId);
 	}
 	
@@ -30,17 +30,15 @@ public class LikeBO {
 	}
 	
 	//좋아요 여부 확인
-	public boolean existLikeByUserIdAndPostId(int userId, int postId) {
+	public boolean existLikeByUserIdAndPostId(Integer userId, int postId) {
 		return likeDAO.existLikeByUserIdAndPostId(userId, postId);
 	}
 	
 	// 좋아요 버튼 동작 
-	public int togleLike(Integer userId, int postId) {
+	public int togleLike(int userId, int postId) {
 		if (existLikeByUserIdAndPostId(userId, postId)) { // 체크 true> 체크되어있음 > 삭제버튼
-			likeDAO.deleteLikeByUserIdAndPostId(userId, postId);  // 성공시1
-			return 0;
+			return likeDAO.deleteLikeByUserIdAndPostId(userId, postId);  // 성공시1
 		}
-			likeDAO.insertLikeByUserIdAndPostId(userId, postId);  // 성공시 1
-			return 1; 
+		return likeDAO.insertLikeByUserIdAndPostId(userId, postId);  // 성공시 1
 	}
 }

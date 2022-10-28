@@ -29,10 +29,10 @@ public class LikeRestController {
 		Map<String, Object> like = new HashMap<>();
 		// 좋아요 있으면 삭제 없으면 추가
 		int row = likeBO.togleLike(userId, postId);
-		if (row == 1) {
+		if (row > 0) {
 			like.put("code", 100);
 		} else {
-			like.put("code", 300);
+			like.put("code", 400);
 		} 
 		
 		return like; 

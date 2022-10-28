@@ -19,7 +19,10 @@
 	FROM
 		`like`
 	WHERE
-		`postId` = #{postId} AND `userId` = #{userId}
+		`postId` = #{postId} 
+		<if test="userId != null">
+			AND `userId` = #{userId}
+		</if>
 </select>
 
 <insert id="insertLikeByUserIdAndPostId" parameterType="map">
