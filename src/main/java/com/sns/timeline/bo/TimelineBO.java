@@ -52,12 +52,12 @@ public class TimelineBO {
 			
 			//(commentBO.generateCommentViewListByPostId( postList.get(i).getId() ) );
 			
-			
 			// post 당 like 의 총개수
 			cardView.setLikeCount(likeBO.getLikeCountByPostId(postList.get(i).getId() ));
-			// 내가 좋아요를 눌렀는지
-			cardView.setFilledLike(likeBO.existLikeByUserIdAndPostId(userId ,postList.get(i).getId()) );
-				
+			if (userId != null) {
+				// 내가 좋아요를 눌렀는지
+				cardView.setFilledLike(likeBO.existLikeByUserIdAndPostId(userId ,postList.get(i).getId()) );
+			}
 			
 			cardViewList.add(cardView);
 		}

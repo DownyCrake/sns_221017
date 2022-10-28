@@ -41,20 +41,23 @@
 			</div>
 			<div class="p-2">
 			
+			
 			<c:choose>
 				<c:when test="${cardView.filledLike eq true }">
-					<button type="button" class="hidden-btn like-btn">
-						<img src="/static/img/heart-icon2.png" height="18px" alt="좋아요">					
+					<button type="button" class="hidden-btn like-btn" data-post-id="${cardView.post.id}">
+						<img src="/static/img/heart-icon2.png" height="18px" alt="좋아요 삭제">					
 					</button>
 				</c:when>
 				
 				<c:otherwise>
-				<button type="button" class="hidden-btn like-btn">
-					<img src="/static/img/heart-icon1.png" height="18px" alt="좋아요">					
+				<button type="button" class="hidden-btn like-btn" data-post-id="${cardView.post.id}">
+					<img src="/static/img/heart-icon1.png" height="18px" alt="좋아요 추가">					
 				</button>
 				</c:otherwise>
 
 			</c:choose>
+			
+			
 				좋아요 ${cardView.likeCount}
 			</div>
 			<div id="postDiv" class="mt-3 mb-3">
@@ -68,7 +71,6 @@
 					<div class="m-2">
 						<span class="font-weight-bold">${commentView.user.name}</span> : ${commentView.comment.content}
 					</div>
-				
 				</c:forEach>
 			</div>
 			<div class="d-flex height-40px border-top" >
@@ -190,7 +192,30 @@ $(document).ready(function(){
 		});//ajax
 	}); //댓글 게시 클릭
 	
-	
+	$('.like-btn').on('click', function() {
+		let postId = $(this).data('post-id');
+		$.ajax({
+			type:"get"
+			, url:"/like/"+postId
+			
+			,success:function(data){
+				if (data.code == 100){
+					alert("좋아요 추가");
+					document.location.reload(true);
+				} else if (data.code == 300) {
+					alert("좋아요 삭제");
+					document.location.reload(true);
+				} else {
+					alert("유저정보 없음");
+					document.location.reload(true);
+				}
+			}
+			
+			, error:function(e){
+				alert("저장에 실패했습니다");
+			}
+		});
+	}); //좋아요 버튼 클릭
 	
 });//ready
 
