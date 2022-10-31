@@ -19,4 +19,6 @@ public interface LikeDAO {
 	public boolean existLikeByUserIdAndPostId(
 			@Param("userId") Integer userId
 			, @Param("postId") int postId);
+
+	public void deleteLikeByPostId(int postId);
 }

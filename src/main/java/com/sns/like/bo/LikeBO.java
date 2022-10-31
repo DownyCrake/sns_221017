@@ -41,4 +41,9 @@ public class LikeBO {
 		}
 		return likeDAO.insertLikeByUserIdAndPostId(userId, postId);  // 성공시 1
 	}
+	
+	// 글 삭제
+	public void deleteLikeByPostId(int postId) {
+		likeDAO.deleteLikeByPostId(postId);
+	}
 }

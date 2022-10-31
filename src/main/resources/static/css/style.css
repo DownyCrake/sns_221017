@@ -1,11 +1,13 @@
 @charset "UTF-8";
   
 a {text-decoration: none !important;}
+.modal-sm {width:130px;}
 
 header {height:100px;}
 .header-box {height:100px;}
 
 .contents {min-height:500px;}
+
 #signUpDiv {height:500px;}  
 .sign-up-box {width:500px;}
 

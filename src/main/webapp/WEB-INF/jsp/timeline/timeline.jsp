@@ -35,9 +35,14 @@
 		<div id="postViewAndComment" class="mt-5">
 			<div class="d-flex justify-content-between p-2">
 				<div class="font-weight-bold">${cardView.user.name }</div>
-				<button type="button" class="hidden-btn"> 
-					<img src="/static/img/more-icon.png" height="20px" alt="게시글 삭제">
-				</button>
+				
+				<c:if test="${cardView.post.userId eq userId}">
+					<button type="button" class="hidden-btn more-btn" data-toggle="modal" data-target="#modal" data-post-id="${cardView.post.id}"> 
+						<img src="/static/img/more-icon.png" height="20px" alt="게시글 옵션 더보기">
+					</button>
+				</c:if>
+				
+				
 			</div>
 			<div id="postImgDiv" class="bg-dark">
 				<img src="${cardView.post.imagePath}" width="600px" alt="게시한 이미지" > 
@@ -71,13 +76,14 @@
 			</div>
 			<div id="commentList" class="border-top">
 				<c:forEach items="${cardView.commentViewList}" var="commentView">
-					<div class="d-flex justify-content-between">
+					<div class="d-flex">
 						<div class="m-2">
 							<span class="font-weight-bold">${commentView.user.name}</span> : ${commentView.comment.content}
 						</div>
-						<div>
+						<div class="mt-1">
 							<c:if test="${userId eq commentView.user.id }">
-							<button type="button" class="delteCommentBtn" data-comment-id="${commentView.comment.id}"></button>
+							<button type="button" class="delteCommentBtn hidden-btn" data-comment-id="${commentView.comment.id}">
+							<img src="/static/img/x-icon.png" width="10px" alt="삭제버튼"></button>
 							</c:if>
 						</div>
 					</div>	
@@ -95,6 +101,28 @@
 	
 	</div>
 </div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="modal">
+<%-- modal-dialog-centered  모달창을 수직으로 가운데 정렬 --%>
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content text-center">
+      <%-- 모달 창 안에 내용 넣기 --%>
+      <div class="p-3 border-bottom">
+	      <button type="button" class="btn btn-danger" id="delPostBtn">삭제</button>
+      </div>
+      <div class="p-3">
+	      <%-- data-dismiss="modal" 모달 창 닫힘 --%>
+	      <button type="button" class="btn" data-dismiss="modal">취소</button>  
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 
 <script>
@@ -230,6 +258,55 @@ $(document).ready(function(){
 			}
 		});
 	}); //좋아요 버튼 클릭
+	
+	$('.delteCommentBtn').on('click', function() {
+		let commentId = $(this).data('comment-id');
+		// alert(commentId);
+		
+		$.ajax({
+			type:"delete"
+			, url:"/comment/delete"
+			, data:{"commentId":commentId}
+			
+			,success:function(data){
+				if (data.code == 100) {
+					document.location.reload(true);
+				} else{
+					alert(data.errorMessage);
+					document.location.reload(true);
+				}
+			}
+			, error:function(e){
+				alert("에러");
+			}
+			
+		}); // ajax
+		
+	}); //삭제 버튼 클릭
+	
+	//더보기 (...) 버튼 클릭 -> 글번호를 modal에 넣는다
+	$('.more-btn').on('click',function(e) {
+		e.preventDefault();
+		let postId = $(this).data("post-id"); //get
+		// alert(postId);
+		
+		$('#modal').data('post-id',postId); //set   data-post-id = "4"
+	}); // 더보기버튼 클릭
+	
+	
+	//모달창 안에 있는 (글)삭제하기 버튼 클릭
+	$('#modal #delPostBtn').on('click', function(e) {
+		e.preventDefault();
+		let postId =$('#modal').data('post-id');
+		alert(postId);
+		
+		// ajax 글삭제
+		$.ajax({
+			
+		}); //ajax
+		
+	}); //모달창
+	
 	
 });//ready
 
