@@ -73,8 +73,8 @@ public class PostRestController {
 			return result;
 		}
 		postBO.deletePost(postId, postId);
-		
-		
+		result.put("code", 100);
+		result.put("result", "삭제되었습니다");
 		return result;
 	}
 }

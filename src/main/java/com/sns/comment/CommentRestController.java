@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,6 +43,22 @@ public class CommentRestController {
 			result.put("code", 600);
 			result.put("errorMessage", "업로드에 실패했습니다. 관리자에게 문의해주세요");
 		}
+		
+		return result;
+	}
+	
+	@DeleteMapping("delete")
+	public Map<String, Object> delete(
+			@RequestParam("commentId") int commentId
+			, HttpSession session) {
+		Map<String, Object> result = new HashMap<>();
+		Integer userId = (Integer)session.getAttribute("userId");
+		if (userId == null) {
+			result.put("code", 400);
+			result.put("errorMessage", "로그인된 유저 정보가 없습니다");
+		}
+		commentBO.deleteCommentByIdAndUserId(commentId, userId);
+		result.put("code", 100);
 		
 		return result;
 	}

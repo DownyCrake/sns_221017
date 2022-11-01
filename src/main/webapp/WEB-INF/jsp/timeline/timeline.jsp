@@ -259,6 +259,7 @@ $(document).ready(function(){
 		});
 	}); //좋아요 버튼 클릭
 	
+	// 댓글 지우기
 	$('.delteCommentBtn').on('click', function() {
 		let commentId = $(this).data('comment-id');
 		// alert(commentId);
@@ -301,8 +302,23 @@ $(document).ready(function(){
 		alert(postId);
 		
 		// ajax 글삭제
+		
 		$.ajax({
+			type:"delete"
+			, data:{"postId":postId}
+			, url:"/post/delete"
 			
+			,success:function(data){
+				if (data.code ==100) {
+					alert(data.result);
+					document.location.reload(true);
+				}else {
+					alert(data.errorMessage);
+				}
+			}
+			,error:function(){
+				alert("에러");
+			}
 		}); //ajax
 		
 	}); //모달창
