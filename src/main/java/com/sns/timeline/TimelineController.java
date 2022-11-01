@@ -23,13 +23,15 @@ public class TimelineController {
 	private TimelineBO timelineBO;
 	
 	@RequestMapping("/timeline_view")
-	public String timelineView(Model model
+	public String timelineView(
+			Integer likeSearchId
+			,Model model
 			,HttpSession session) {
 		
 		//List<Post> postList = postBO.getPostList();
 		//model.addAttribute("postList", postList);
 		Integer userId =(Integer)session.getAttribute("userId");
-		List<CardView> cardViewList = timelineBO.generateCardList(userId);
+		List<CardView> cardViewList = timelineBO.generateCardList(userId, likeSearchId);
 		model.addAttribute("cardViewList", cardViewList);
 		
 		

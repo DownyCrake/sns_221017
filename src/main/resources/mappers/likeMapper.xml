@@ -55,4 +55,13 @@
 		`postId` = #{postId}
 </delete>
 
+<select id="searchLikePost" parameterType="int" resultType="com.sns.like.model.Like">
+	SELECT
+		`postId`
+	FROM
+		`like`
+	WHERE
+		`userId` = #{userId}
+</select>
+
 </mapper>

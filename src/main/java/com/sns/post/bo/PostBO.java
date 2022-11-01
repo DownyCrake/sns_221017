@@ -44,6 +44,10 @@ public class PostBO {
 		return postDAO.selectPostList();
 	}
 	
+	public List<post> getPostListByPostIdList(List likePostIdList){
+		
+	}
+	
 	public void deletePost(int postId, int userId) {
 		// 기존글 가져오기
 		Post post = postDAO.selectPostByPostId(postId);

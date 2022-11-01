@@ -13,6 +13,10 @@
 		</a>
 	</div>
 	
+	<div>
+		<button type="button" id="likeSearchBtn" class="btn btn-warning" data-user-id="${userId}" >좋아요</button>
+	</div>
+	
 	<%-- 로그인 정보 --%>
 	<div class="mr-5">
 		
@@ -26,3 +30,32 @@
 	</div>
 </div>   
     
+<script>
+$(document).ready(function() {
+	$('#likeSearchBtn').on('click', function() {
+		let userId = $(this).data('user-id');
+		//alert(userId);
+		
+		$.ajax({
+			type:"get"
+			, url:"/timeline/timeline_view"
+			, data:{"likeSearchId":userId}
+		
+			, success:function(data){
+				if (data.code == 100) {
+					document.location.reload(true);
+				} else {
+					alert(data.errorMessage);
+				}
+			}
+			, error:function(){
+				alert("에러");
+			}
+		}); //ajax
+		
+		
+	});//좋아요 서치 버튼
+	
+}); //ready
+
+</script>

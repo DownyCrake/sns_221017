@@ -1,12 +1,12 @@
 package com.sns.like.bo;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sns.like.dao.LikeDAO;
+import com.sns.like.model.Like;
 
 @Service
 public class LikeBO {
@@ -45,5 +45,10 @@ public class LikeBO {
 	// 글 삭제
 	public void deleteLikeByPostId(int postId) {
 		likeDAO.deleteLikeByPostId(postId);
+	}
+	
+	// 체크된 라이크 리스트 만들기
+	public List<Like> searchLikePost(int userId) {
+		return likeDAO.selectLikePost(userId);
 	}
 }

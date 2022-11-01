@@ -72,7 +72,7 @@ public class PostRestController {
 			result.put("errorMessage","로그인된 유저 정보가 없습니다");
 			return result;
 		}
-		postBO.deletePost(postId, postId);
+		postBO.deletePost(postId, userId);
 		result.put("code", 100);
 		result.put("result", "삭제되었습니다");
 		return result;

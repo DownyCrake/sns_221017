@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.sns.comment.bo.CommentBO;
 import com.sns.like.bo.LikeBO;
+import com.sns.like.model.Like;
 import com.sns.post.bo.PostBO;
 import com.sns.post.model.Post;
 import com.sns.timeline.CardView;
@@ -30,11 +31,25 @@ public class TimelineBO {
 	@Autowired
 	private LikeBO likeBO;
 	
-	public List<CardView> generateCardList(Integer userId) {  //로그인이 안된 사람도 카드 목록이 보여야 하기 때문에 Integer userId
+	public List<CardView> generateCardList(Integer userId, Integer likeSearchId) {  //로그인이 안된 사람도 카드 목록이 보여야 하기 때문에 Integer userId
 		List<CardView> cardViewList = new ArrayList<>();
 		
 		//글 목록들을 가져온다
-		List<Post> postList = postBO.getPostList();
+		
+		List<Post> postList = new ArrayList<>();
+		
+		if (likeSearchId != null) {
+			List<Like> likeList = likeBO.searchLikePost(likeSearchId);
+			List<Integer> likePostIdList = new ArrayList<>();
+			for (Like like : likeList) {
+				int postId = like.getPostId();
+				likePostIdList.add(postId);
+			}
+			
+			postList = 
+		}
+		
+		postList = postBO.getPostList();
 		
 		//반복문 > cardView에 넣음
 		
