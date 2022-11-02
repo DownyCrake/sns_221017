@@ -38,18 +38,20 @@ public class TimelineBO {
 		
 		List<Post> postList = new ArrayList<>();
 		
+		List<Integer> likePostIdList = new ArrayList<>();
 		if (likeSearchId != null) {
 			List<Like> likeList = likeBO.searchLikePost(likeSearchId);
-			List<Integer> likePostIdList = new ArrayList<>();
 			for (Like like : likeList) {
 				int postId = like.getPostId();
 				likePostIdList.add(postId);
 			}
 			
-			postList = 
+			postList = postBO.etPostListByPostIdList(likeSearchId);
 		}
 		
-		postList = postBO.getPostList();
+		else {
+			postList = postBO.getPostList();
+		}
 		
 		//반복문 > cardView에 넣음
 		

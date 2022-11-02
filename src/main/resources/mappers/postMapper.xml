@@ -52,6 +52,27 @@
  
  </select>
  
+ <select id="selectPostListByPostIdList" parameterType="List" resultType="com.sns.post.model.Post">
+ 	SELECT 
+ 		 `id`
+		, `userId`
+		, `content`
+		, `imagePath`
+		, `createdAt`
+		, `updatedAt`
+	FROM
+		`post`
+	WHERE 
+		 <choose>
+            <when test="likePostIdList.size != 0">
+                id in 
+                <foreach collection="likePostIdList" item="item" index="index" separator="," open="(" close=")">
+                    #{item}
+                </foreach>
+            </when>
+        </choose>
+ </select>
+ 
  <delete id="deletePostByPostIdAndUserId" parameterType="int">
  	DELETE FROM
  		`post`

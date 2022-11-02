@@ -44,8 +44,8 @@ public class PostBO {
 		return postDAO.selectPostList();
 	}
 	
-	public List<post> getPostListByPostIdList(List likePostIdList){
-		
+	public List<Post> etPostListByPostIdList(Integer likePostIdList){
+		return postDAO.selectPostListByPostIdList(likePostIdList);
 	}
 	
 	public void deletePost(int postId, int userId) {
