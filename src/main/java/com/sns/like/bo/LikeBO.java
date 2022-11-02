@@ -1,7 +1,9 @@
 package com.sns.like.bo;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.tomcat.util.digester.ArrayStack;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,7 +50,9 @@ public class LikeBO {
 	}
 	
 	// 체크된 라이크 리스트 만들기
-	public List<Like> searchLikePost(int userId) {
-		return likeDAO.selectLikePost(userId);
+	public List<Integer> searchLikePost(int userId) {
+		List<Integer> result = new ArrayList<>();
+		result = likeDAO.selectLikePost(userId);
+		return result; 
 	}
 }

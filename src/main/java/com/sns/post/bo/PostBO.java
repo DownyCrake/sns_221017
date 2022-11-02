@@ -1,5 +1,6 @@
 package com.sns.post.bo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -44,8 +45,11 @@ public class PostBO {
 		return postDAO.selectPostList();
 	}
 	
-	public List<Post> etPostListByPostIdList(Integer likePostIdList){
-		return postDAO.selectPostListByPostIdList(likePostIdList);
+	public List<Post> getPostListByPostIdList(List<Integer> likePostIdList){
+		
+		List<Post> postList = new ArrayList<>();
+		postList = postDAO.selectPostListByPostIdList(likePostIdList);
+		return postList;
 	}
 	
 	public void deletePost(int postId, int userId) {

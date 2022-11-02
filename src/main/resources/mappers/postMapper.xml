@@ -52,7 +52,7 @@
  
  </select>
  
- <select id="selectPostListByPostIdList" parameterType="List" resultType="com.sns.post.model.Post">
+ <select id="selectPostListByPostIdList"  resultType="com.sns.post.model.Post">
  	SELECT 
  		 `id`
 		, `userId`
@@ -63,14 +63,10 @@
 	FROM
 		`post`
 	WHERE 
-		 <choose>
-            <when test="likePostIdList.size != 0">
-                id in 
-                <foreach collection="likePostIdList" item="item" index="index" separator="," open="(" close=")">
+                `id` IN
+                <foreach collection="list" item="item" separator="," open="(" close=")">
                     #{item}
                 </foreach>
-            </when>
-        </choose>
  </select>
  
  <delete id="deletePostByPostIdAndUserId" parameterType="int">

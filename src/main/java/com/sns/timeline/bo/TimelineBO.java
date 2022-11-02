@@ -40,13 +40,8 @@ public class TimelineBO {
 		
 		List<Integer> likePostIdList = new ArrayList<>();
 		if (likeSearchId != null) {
-			List<Like> likeList = likeBO.searchLikePost(likeSearchId);
-			for (Like like : likeList) {
-				int postId = like.getPostId();
-				likePostIdList.add(postId);
-			}
-			
-			postList = postBO.etPostListByPostIdList(likeSearchId);
+			likePostIdList = likeBO.searchLikePost(userId);
+			postList = postBO.getPostListByPostIdList(likePostIdList);
 		}
 		
 		else {

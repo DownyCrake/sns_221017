@@ -55,7 +55,7 @@
 		`postId` = #{postId}
 </delete>
 
-<select id="searchLikePost" parameterType="int" resultType="com.sns.like.model.Like">
+<select id="selectLikePost" parameterType="int" resultType="int">
 	SELECT
 		`postId`
 	FROM

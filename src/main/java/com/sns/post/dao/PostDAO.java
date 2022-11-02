@@ -23,5 +23,5 @@ public interface PostDAO {
 			@Param("postId") int postId
 			, @Param("userId") int userId);
 	
-	public List<Post> selectPostListByPostIdList(Integer likePostIdList);
+	public List<Post> selectPostListByPostIdList(List<Integer> postIdList);
 }

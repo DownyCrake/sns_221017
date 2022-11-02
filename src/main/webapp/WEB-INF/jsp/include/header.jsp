@@ -36,22 +36,21 @@ $(document).ready(function() {
 		let userId = $(this).data('user-id');
 		//alert(userId);
 		
-		$.ajax({
-			type:"get"
-			, url:"/timeline/timeline_view"
-			, data:{"likeSearchId":userId}
+		/*
+		let url = $(this).attr('action');
+		let params = $(this).serialize();
 		
-			, success:function(data){
-				if (data.code == 100) {
-					document.location.reload(true);
-				} else {
-					alert(data.errorMessage);
-				}
+		$.post(url,params)
+		.done(function(data){
+			if (data.code == 100) { //성공
+				location.href = "/post/post_list_view" //글 목록 화면으로 이동
+			} else {
+				alert(data.errorMessage);
 			}
-			, error:function(){
-				alert("에러");
-			}
-		}); //ajax
+			
+		});
+		*/
+		location.href="/timeline/timeline_view?likeSearchId="+userId;
 		
 		
 	});//좋아요 서치 버튼
