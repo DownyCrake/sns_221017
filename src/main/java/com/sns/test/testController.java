@@ -28,4 +28,9 @@ public class testController {
 		comment = testDAO.selectComment();
 		return comment ;
 	}
+	
+	@RequestMapping("/test/main")
+	public String testMain(){
+		return "/testMain";
+	}
 }
